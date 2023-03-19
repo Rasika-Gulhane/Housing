@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from typing import List
 
 #Declairing variables for setup function
@@ -11,6 +11,8 @@ DESCRIPTION = "This is House Price Prediction ML project "
 PACKAGES = ['housing']
 REQUIREMNETS_FILE_NAME = 'requirements.txt'
 
+HYPHEN_E_DOT = "-e ."
+
 def get_requirements_list() -> List[str]:
     """ 
     This function is going to return list of 
@@ -19,16 +21,37 @@ def get_requirements_list() -> List[str]:
     libraries mention in requirement.txt file
     """
     with open(REQUIREMNETS_FILE_NAME) as requirement_file:
-        return requirement_file.readlines()
+        requirement_list = requirement_file.readlines()
+        requirement_list = [requirement_name.replace("\n", "") for requirement_name in requirement_list]
+        if HYPHEN_E_DOT in requirement_list:
+            requirement_list.remove(HYPHEN_E_DOT)
+        return requirement_list
+    
+    
 
 setup(
     name = PROJECT_NAME,
     version = VERSION,
     author = AUTHOR,
     description = DESCRIPTION,
-    packages = PACKAGES,
+    packages = find_packages(),
     install_requirements = get_requirements_list()
 )
 
 if __name__ == "__main__":
     print(get_requirements_list())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
