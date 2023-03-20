@@ -72,6 +72,11 @@ To setup CI/CD pipeline in heroku we need 3 information
 2. HEROKU_API_KEY = <>
 3. HEROKU_APP_NAME = ml-regression-app
 
+Docker daemon
+```
+docker run -d -p 80:80 docker/getting-started
+```
+
 BUILD DOCKER IMAGE
 ```
 docker build -t <image_name>:<tagname> .
