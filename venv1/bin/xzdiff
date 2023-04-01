@@ -30,7 +30,7 @@ case ${0##*/} in
   *)     prog=xzdiff; cmp=${DIFF:-diff};;
 esac
 
-version="$prog (XZ Utils) 5.2.10"
+version="$prog (XZ Utils) 5.2.6"
 
 usage="Usage: ${0##*/} [OPTION]... FILE1 [FILE2]
 Compare FILE1 to FILE2, using their uncompressed contents if they are
@@ -39,7 +39,7 @@ FILE1 from which the compression format suffix has been stripped.
 
 Do comparisons like '$cmp' does.  OPTIONs are the same as for '$cmp'.
 
-Report bugs to <xz@tukaani.org>."
+Report bugs to <lasse.collin@tukaani.org>."
 
 # sed script to escape all ' for the shell, and then (to handle trailing
 # newlines correctly) turn trailing X on last line into '.
@@ -65,9 +65,8 @@ for file; do
   test "X$file" = X- || <"$file" || exit 2
 done
 
-# xz needs -qQ to ignore warnings like unsupported check type.
-xz1="$xz -qQ"
-xz2="$xz -qQ"
+xz1=$xz
+xz2=$xz
 xz_status=0
 exec 3>&1
 

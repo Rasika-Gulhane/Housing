@@ -108,9 +108,7 @@ extern LZMA_API(lzma_bool) lzma_filter_decoder_is_supported(lzma_vli id)
  * need to be initialized by the caller in any way.
  *
  * If an error occurs, memory possibly already allocated by this function
- * is always freed. liblzma versions older than 5.2.7 may modify the dest
- * array and leave its contents in an undefined state if an error occurs.
- * liblzma 5.2.7 and newer only modify the dest array when returning LZMA_OK.
+ * is always freed.
  *
  * \return      - LZMA_OK
  *              - LZMA_MEM_ERROR
@@ -120,8 +118,7 @@ extern LZMA_API(lzma_bool) lzma_filter_decoder_is_supported(lzma_vli id)
  */
 extern LZMA_API(lzma_ret) lzma_filters_copy(
 		const lzma_filter *src, lzma_filter *dest,
-		const lzma_allocator *allocator)
-		lzma_nothrow lzma_attr_warn_unused_result;
+		const lzma_allocator *allocator) lzma_nothrow;
 
 
 /**

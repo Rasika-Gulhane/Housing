@@ -14,7 +14,7 @@ app= application
 def index():
 
     try:
-        
+
         raise Exception("we are testing custom exception")
     except Exception as e:
         housing = HousingException(e,sys)
