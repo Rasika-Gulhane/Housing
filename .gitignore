@@ -105,6 +105,7 @@ celerybeat.pid
 .env
 .venvs
 .venv1
+.venv_housing
 env/
 venv/
 venv1/
@@ -112,6 +113,8 @@ venv1.bak/
 ENV/
 env.bak/
 venv.bak/
+venv_housing/
+
 
 # Spyder project settings
 .spyderproject
