@@ -1,17 +1,18 @@
 import sys
 sys.path.append("/Users/rasikagulhane/Housing/housing")
 
-from entity.config_entity import DataIntegrationConfig, DataValidationConfig, DataTransformationConfig, ModelEvaluationConfig, ModelPusherConfig, ModelTrainerConfig, TrainingPipelineConfig
+from entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelEvaluationConfig, ModelPusherConfig, ModelTrainerConfig, TrainingPipelineConfig
 from util.util import read_yaml_file
 from constant import *
 from exception import HousingException
-import logging
+from logger import logging
+import os 
 
 # print(CONFIG_FILE_PATH)
 
 
 class Configuration:
-    def __init__(self, config_file_path:str = CONFIG_FILE_PATH, 
+    def __init__(self, config_file_path:str = CONFIG_FILE_PATH,
                  current_time_stamp:str = CURRENT_TIME_STAMP) -> None:
         try:
             self.config_info= read_yaml_file(file_path=config_file_path)
@@ -24,7 +25,7 @@ class Configuration:
 
 
 
-    def get_data_ingestion_config(self) -> DataIntegrationConfig:
+    def get_data_ingestion_config(self) -> DataIngestionConfig:
         try:
             artifact_dir = self.training_pipeline_config.artifact_dir
             data_ingestion_artifact_dir = os.path.join(
@@ -34,7 +35,7 @@ class Configuration:
             )
 
             data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
-            dataset_download_url= data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY],
+            dataset_download_url= data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
 
             tgz_download_dir= os.path.join(
                 data_ingestion_artifact_dir,
@@ -60,15 +61,15 @@ class Configuration:
                 data_ingestion_info[DATA_INGESTION_TEST_DIR_KEY]
             )
 
-            data_integration_config = DataIntegrationConfig(
+            data_ingestion_config = DataIngestionConfig(
                 dataset_download_url= dataset_download_url,
                 tgz_download_dir= tgz_download_dir,
                 raw_data_dir= raw_data_dir,
                 ingested_train_dir= ingested_train_dir, 
                 ingested_test_dir = ingested_test_dir                                                                                                                        
             )
-            logging.info(f'Data Ingestion Config: {data_integration_config}')
-            return data_integration_config
+            logging.info(f'Data Ingestion Config: {data_ingestion_config}')
+            return data_ingestion_config
         except Exception as e:
             raise HousingException(e,sys) from e
         
@@ -162,6 +163,7 @@ class Configuration:
             return data_transformation_config
         except Exception as e:
             raise HousingException(e,sys) from e
+
         
         
         

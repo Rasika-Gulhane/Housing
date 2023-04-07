@@ -5,4 +5,4 @@ pandas
 numpy
 typing
 PyYAML
-
+scikit-learn
