@@ -10,7 +10,6 @@ import tarfile
 import numpy as np
 from six.moves import urllib
 import pandas as pd
-# from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.model_selection import StratifiedShuffleSplit
 
 class DataIngestion:

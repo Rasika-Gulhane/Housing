@@ -2,6 +2,7 @@ Flask
 gunicorn
 sklearn
 pandas
+matplotlib
 numpy
 typing
 PyYAML
