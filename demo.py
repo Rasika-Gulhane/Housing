@@ -10,8 +10,8 @@ import os
 
 def main():
     try:
-        # pipeline = Pipeline()
-        # pipeline.run_pipeline()
+        pipeline = Pipeline()
+        pipeline.run_pipeline()
         # config_path = os.path.join("config","config.yaml")
         # pipeline = Pipeline(Configuartion(config_file_path=config_path))
         #pipeline.run_pipeline()
@@ -25,8 +25,8 @@ def main():
         # df= DataTransformation.load_data(file_path=file_path,schema_file_path=schema_file_path)
         # print(df.columns)
         # print(df.dtypes)
-        data_validation_config = Configuration().get_data_validation_config()
-        print(data_validation_config)
+        # data_validation_config = Configuration().get_data_validation_config()
+        # print(data_validation_config)
 
 
     except Exception as e:

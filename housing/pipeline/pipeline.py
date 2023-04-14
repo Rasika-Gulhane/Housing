@@ -4,17 +4,16 @@ sys.path.append('/Users/rasikagulhane/Desktop/Housing/housing')
 from config.configuration import Configuration
 from logger import logging
 from exception import HousingException
-# from threading import Thread
-# from typing import List
-
-# from multiprocessing import Process
-
-from entity.artifact_entity import DataIngestionArtifact
+from entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
 # from Housing.entity.artifact_entity import DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact
 from entity.config_entity import DataIngestionConfig
 from component.data_ingestion import DataIngestion
 # 
-# from housing.component.data_validation import DataValidation
+from component.data_validation import DataValidation
+# from threading import Thread
+# from typing import List
+
+# from multiprocessing import Process
 
 # from housing.component.data_transformation import DataTransformation
 # from housing.component.model_trainer import ModelTrainer
@@ -51,11 +50,20 @@ class Pipeline:
             return data_ingestion.initiate_data_ingestion()
         except Exception as e:
             raise HousingException(e, sys) from e
-        
+    def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact) \
+            -> DataValidationArtifact:
+        try:
+            data_validation = DataValidation(data_validation_config=self.config.get_data_validation_config(),
+                                             data_ingestion_artifact=data_ingestion_artifact
+                                             )
+            return data_validation.initiate_data_validation()
+        except Exception as e:
+            raise HousingException(e, sys) from e
 
     def run_pipeline(self):
         try:
             data_ingestion_artifact =self.start_data_ingestion()
+            data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
         except Exception as e:
             raise HousingException(e, sys) from e       
 
@@ -117,15 +125,7 @@ class Pipeline:
 #         except Exception as e:
 #             raise HousingException(e, sys) from e
 
-#     def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact) \
-#             -> DataValidationArtifact:
-#         try:
-#             data_validation = DataValidation(data_validation_config=self.config.get_data_validation_config(),
-#                                              data_ingestion_artifact=data_ingestion_artifact
-#                                              )
-#             return data_validation.initiate_data_validation()
-#         except Exception as e:
-#             raise HousingException(e, sys) from e
+
 
 #     def start_data_transformation(self,
 #                                   data_ingestion_artifact: DataIngestionArtifact,

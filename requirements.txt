@@ -7,3 +7,5 @@ numpy
 typing
 PyYAML
 scikit-learn
+evidently
+-e .

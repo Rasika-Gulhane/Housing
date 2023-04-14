@@ -12,19 +12,26 @@ from evidently.model_profile import Profile
 from evidently.model_profile.sections import DataDriftProfileSection
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import DataDriftTab
-
 class DataValidation:
 
     def __init__(self,data_validation_config:DataValidationConfig,
                  data_ingestion_artifact: DataIngestionArtifact):
         try:
-            # logging.info(f"{'>>'*20}Data Ingestion log started.{'<<'*20} ")
+            logging.info(f"{'>>'*20}Data Ingestion log started.{'<<'*20} ")
             self.data_validation_config = data_validation_config
             self.data_ingestion_artifact = data_ingestion_artifact
 
         except Exception as e:
             raise HousingException(e,sys)
         
+    def get_train_and_test_df(self):
+        try:
+            train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
+            test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
+            return train_df,test_df
+        except Exception as e:
+            raise HousingException(e,sys) from e
+
     def is_train_test_file_exists(self):
         try:
             logging.info("Checking if training and testing file is available")
@@ -34,15 +41,15 @@ class DataValidation:
             train_file_path = self.data_ingestion_artifact.train_file_path
             test_file_path =self.data_ingestion_artifact.test_file_path
 
-            is_train_file_exist = os.path.exist(train_file_path)
-            is_test_file_exist = os.path.exist(test_file_path)
+            is_train_file_exist = os.path.exists(train_file_path)
+            is_test_file_exist = os.path.exists(test_file_path)
 
             is_available = is_train_file_exist and is_test_file_exist
 
             logging.info(f"Is train and test file exist? -> {is_available}")
 
             if not is_available:
-                training_file = self.data_ingestion_artificat.train_file_path
+                training_file = self.data_ingestion_artifact.train_file_path
                 testing_file = self.data_ingestion_artifact.test_file_path
                 message= f"Training file: {training_file} or Testing file: {testing_file}" \
                 "is not present"
@@ -54,7 +61,7 @@ class DataValidation:
             raise HousingException(e,sys)
         
 
-    def validate_datset_schema(self):
+    def validate_dataset_schema(self) -> bool:
         try:
             validation_status = False
 
