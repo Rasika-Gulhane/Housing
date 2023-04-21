@@ -66,6 +66,16 @@ class DataValidation:
             validation_status = False
 
             #Assignment
+            #1 Number of columns:
+            # train_df,test_df = self.get_train_and_test_df()
+            
+
+            # #2 Value of Ocean Proximity
+
+            # #3 Column Names:
+            # train_df.column()
+            # test_df.column()
+
             
 
             validation_status= True
@@ -92,6 +102,7 @@ class DataValidation:
 
             with open(report_file_path,"w") as report_file:
                 json.dump(report, report_file, indent=6)
+                
             return report
         except Exception as e:
             raise HousingException(e,sys) from e
